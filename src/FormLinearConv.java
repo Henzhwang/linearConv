@@ -9,6 +9,9 @@
  *
  * @author shhua8751
  */
+
+import java.text.*;
+
 public class FormLinearConv extends javax.swing.JFrame {
 
     /**
@@ -49,17 +52,20 @@ public class FormLinearConv extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        linearLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         linearLabel.setText("Linear Conversion");
 
+        methodLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         methodLabel.setText("Choose a conversion method:");
 
-        methodBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1.Inches to Centimetres", "2.Centimetres to Inches", "3.Feet to Centimetres", "4.Centimetres to Feet", "5.Yards to Metres", "6.Metres to Yards", "7.Miles to Kilometres", "8.Kilometres to Miles", " " }));
+        methodBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose a conversion method", "1.Inches to Centimetres", "2.Centimetres to Inches", "3.Feet to Centimetres", "4.Centimetres to Feet", "5.Yards to Metres", "6.Metres to Yards", "7.Miles to Kilometres", "8.Kilometres to Miles", " " }));
         methodBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 methodBoxActionPerformed(evt);
             }
         });
 
+        valueLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         valueLabel.setText("Enter the value to be converted:  ");
 
         convertButton.setText("Convert");
@@ -69,14 +75,15 @@ public class FormLinearConv extends javax.swing.JFrame {
             }
         });
 
+        outputLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        outputLabel.setForeground(new java.awt.Color(255, 51, 0));
+
+        hintLabel.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(172, 172, 172)
-                .addComponent(linearLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,13 +104,17 @@ public class FormLinearConv extends javax.swing.JFrame {
                                     .addComponent(valueInput)
                                     .addComponent(methodBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(41, 41, 41))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(132, 132, 132)
+                .addComponent(linearLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addGap(28, 28, 28)
                 .addComponent(linearLabel)
-                .addGap(48, 48, 48)
+                .addGap(49, 49, 49)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(methodLabel)
                     .addComponent(methodBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -118,7 +129,7 @@ public class FormLinearConv extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(hintLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(outputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
         );
@@ -150,6 +161,7 @@ public class FormLinearConv extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void convertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_convertButtonActionPerformed
+        //Listing all the variable will be use in the code.
         String method;
         String one;
         String two;
@@ -159,8 +171,12 @@ public class FormLinearConv extends javax.swing.JFrame {
         String six;
         String seven;
         String eight;
+        double value;
         
+        //To get the method which the user selected.
         method = (String) methodBox.getSelectedItem();
+        
+        //To convert all the selection to numbers in order to match with the method in the later codes.
         one    =   "1.Inches to Centimetres";
         two    =   "2.Centimetres to Inches";
         three  =   "3.Feet to Centimetres";
@@ -169,165 +185,232 @@ public class FormLinearConv extends javax.swing.JFrame {
         six    =   "6.Metres to Yards";
         seven  =   "7.Miles to Kilometres";
         eight  =   "8.Kilometres to Miles";
+        
+        //To get the value from the textfield in order to calculate.
+        value = Double.parseDouble(valueInput.getText());
+        
+        //To set a decimal format for the numbers.
+        DecimalFormat x = new DecimalFormat("###.##");
 
         
-        
+        /*
+         * This code is uses to match up the method in order to do differnt calculations
+         * and get the return value and message it out.
+         */
         if (method == one)
         {
-            inchesToCentimetres(30);
+            outputLabel.setText(value + " Inches = " + x.format(inchesToCentimetres(value)) + " Centimetres");
         }
         else if(method == two)
         {
-            centimetresToInches(30);
+            outputLabel.setText(value + " Inches = " + x.format(centimetresToInches(value)) + " Centimetres");
         }
         else if(method == three)
         {
-            feetToCentimetres(30);
+            outputLabel.setText(value + " Inches = " + x.format(feetToCentimetres(value)) + " Centimetres");
         }
         else if(method == four)
         {
-            centimetresToFeet(30);
+            outputLabel.setText(value + " Inches = " + x.format(centimetresToFeet(value)) + " Centimetres");
         }
         else if(method == five)
         {
-            yardsToMetres(30);
+            outputLabel.setText(value + " Inches = " + x.format(yardsToMetres(value)) + " Centimetres");
         }
         else if(method == six)
         {
-            metresToYards(30);
+            outputLabel.setText(value + " Inches = " + x.format(metresToYards(value)) + " Centimetres");
         }
         else if (method == seven)
         {
-            milesToKilometres(30);
+            outputLabel.setText(value + " Inches = " + x.format(milesToKilometres(value)) + " Centimetres");
         }
         else if (method == eight)
         {
-            kilometresToMiles(30);
+           outputLabel.setText(value + " Inches = " + x.format(kilometresToMiles(value)) + " Centimetres");
         }
+        
+        
     }//GEN-LAST:event_convertButtonActionPerformed
 
     private void methodBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_methodBoxActionPerformed
+        /*
+         * This is uses to when the user select the method of conversion 
+         * and the hint Label under the enter the vaueLabel will be setText to the 
+         * method of the user selected.
+         */
         String conversion;
         conversion = (String)methodBox.getSelectedItem();
         if (conversion  == "1.Inches to Centimetres")
         {
             hintLabel.setText("Inches to Centimetres");
         }
-        
+        else if (conversion == "2.Centimetres to Inches")
+        {
+            hintLabel.setText("Centimetres to Inches");
+        }
+        else if (conversion == "3.Feet to Centimetres")
+        {
+            hintLabel.setText("Feet to Centimetres");
+        }
+        else if(conversion == "4.Centimetres to Feet")
+        {
+            hintLabel.setText("Centimetres to Feet");
+        }
+        else if(conversion == "5.Yards to Centimetres")
+        {
+            hintLabel.setText("Yards to Centimetres");
+        }
+        else if (conversion == "6.Centimetres to Yards")
+        {
+            hintLabel.setText("Centimetres to Yards");
+        }
+        else if (conversion == "7.Miles to Kilometres")
+        {
+            hintLabel.setText("Miles to Kilometres");
+        }
+        else if (conversion == "8. Kilometres to Miles")
+        {
+            hintLabel.setText("Kilometres to Miles");
+        }
     }//GEN-LAST:event_methodBoxActionPerformed
 
-    private void inchesToCentimetres(int value)
+    /**
+     * This method is uses to convert value of inches to value of centimeters.
+     * pre: x inches
+     * post: x centimeters
+     * Return the value of centimeters and message it out.
+     * @param value 
+     */
+    
+    private double inchesToCentimetres(double value)
     {
-        double inches;
         double centimetres;
-        String messageOut;
         
-        inches = Integer.parseInt(valueInput.getText());
-        centimetres = inches * 2.54;
+        centimetres = value * 2.54;
         
-        messageOut = inches + " Inches = " + Math.round(centimetres) + " Centimetres";
-        
-        outputLabel.setText(messageOut);
-            
+        return centimetres;         
     }
     
-    private void centimetresToInches(int value)
+    /**
+     * This method is uses to convert of centimeters to inches
+     * pre: x centimeters
+     * post: x inches
+     * Return the value of inches and message it out.
+     * @param value
+     * @return 
+     */
+    private double centimetresToInches(double value)
     {
         double inches;
-        double centimetres;
-        String messageOut;
         
-        centimetres = Integer.parseInt(valueInput.getText());
-        inches = centimetres * 0.39370;
+        inches = value * 0.39370;
         
-        messageOut = centimetres + " Centimetres = " + Math.round(inches) + " Inches";
-        
-        outputLabel.setText(messageOut);
+        return inches;
     }
     
-     private void feetToCentimetres(int value)
+    
+    /**
+     * This method is uses to convert of feet to centimeters
+     * pre: x feet
+     * posy: x centimeters
+     * Return the value of centimeters and message it out.
+     * @param value
+     * @return 
+     */
+     private double feetToCentimetres(double value)
     {
-        double feet;
         double centimetres;
-        String messageOut;
         
-        feet = Integer.parseInt(valueInput.getText());
-        centimetres = feet * 30;
+        centimetres = value * 30;
         
-        messageOut = feet + " Feet = " + Math.round(centimetres) + " Centimetres";
-        
-        outputLabel.setText(messageOut);
+        return centimetres;
     }
     
      
-      private void centimetresToFeet(int value)
+     /**
+      * This method is uses to convert centimeters to feet .
+      * pre: x centimeters
+      * post: x feet
+      * Return the value of feet and message it out.
+      * @param value
+      * @return 
+      */
+      private double centimetresToFeet(double value)
     {
         double feet;
-        double centimetres;
-        String messageOut;
         
-        centimetres = Integer.parseInt(valueInput.getText());
-        feet = centimetres * 0.032808;
+        feet = value * 0.032808;
         
-        messageOut = centimetres + " Centimetres = " + Math.round(feet) + " Feet";
-        
-        outputLabel.setText(messageOut);
+        return feet;
     }
       
-       private void yardsToMetres(int value)
+      
+      /**
+       * This method is uses to convert value of yards to value of meters.
+       * pre: x yards
+       * post: x.meters
+       * return the value of meters and message it out.
+       * @param value
+       * @return 
+       */
+       private double yardsToMetres(double value)
+    {
+        double metres;
+        
+        metres = value * 0.91;
+        
+        return metres;
+    }
+       /**
+        * this method is uses to convert the value of meters to value of yards.
+        * pre: x meters
+        * post: x yards
+        * Return the value of yards and message it out.
+        * @param value
+        * @return 
+        */
+        private double metresToYards(double value)
     {
         double yards;
-        double metres;
-        String messageOut;
         
-        yards = Integer.parseInt(valueInput.getText());
-        metres = yards * 0.91;
+        yards = value * 1.0936;
         
-        messageOut = yards + " Yards = " + Math.round(metres) + " Metres";
-        
-        outputLabel.setText(messageOut);
-    }
-       
-        private void metresToYards(int value)
-    {
-        double yards;
-        double metres;
-        String messageOut;
-        
-        metres = Integer.parseInt(valueInput.getText());
-        yards = metres * 1.0936;
-        
-        messageOut = metres + " Metres = " + Math.round(yards) + " Yards";
-        
-        outputLabel.setText(messageOut);
+        return yards;
     }
         
-         private void milesToKilometres(int value)
+        /**
+         * This method is uses to convert the value of miles to value of kilometers.
+         * pre: x miles
+         * post: x.kilometers
+         * Return the value of miles and message it out.
+         * @param value
+         * @return 
+         */
+        private double milesToKilometres(double value)
     {
-        double miles;
         double kilometres;
-        String messageOut;
+       
+        kilometres = value * 1.6;
         
-        miles = Integer.parseInt(valueInput.getText());
-        kilometres = miles * 1.6;
-        
-        messageOut = miles + " Miles = " + Math.round(kilometres) + " Kilometres";
-        
-        outputLabel.setText(messageOut);
+        return kilometres;
     }
          
-           private void kilometresToMiles(int value)
+        /**
+         * This method is uses to convert the value of kilometers to the value of miles.
+         * pre: x. kilometers
+         * post: x miles
+         * Return the value of miles and message it out.
+         * @param value
+         * @return 
+         */
+        private double kilometresToMiles(double value)
     {
         double miles;
-        double kilometres;
-        String messageOut;
         
-        kilometres = Integer.parseInt(valueInput.getText());
-        miles = kilometres * 0.62137;
+        miles = value * 0.62137;
         
-        messageOut = kilometres + " Kilometres = " + Math.round(miles) + " Miles";
-        
-        outputLabel.setText(messageOut);
+        return miles;
     }
         
     /**
