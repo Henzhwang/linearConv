@@ -279,6 +279,7 @@ public class FormLinearConv extends javax.swing.JFrame {
      * post: x centimeters
      * Return the value of centimeters and message it out.
      * @param value 
+     * @return 
      */
     
     private double inchesToCentimetres(double value)
